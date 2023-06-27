@@ -1,2 +1,2 @@
-# SimpleFTPServerAndClient
-A Simple FTP Server and Client
+# lumine
+lumine engine is a toy C++ game engine

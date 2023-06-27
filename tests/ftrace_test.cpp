@@ -4,14 +4,7 @@
 
 void func3()
 {
-    try
-    {
-        throw simple_error_t(SUCCESS_CDX, "error test");
-    }
-    catch (simple_error_t & e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+    throw simple_error_t(SUCCESS_CDX, "error test");
 }
 
 void func2()
@@ -32,8 +25,14 @@ int main (int, char ** argv)
     {
         func1();
     };
-
-    func();
+    try
+    {
+        func();
+    }
+    catch (simple_error_t & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
 
     return 0;
 }

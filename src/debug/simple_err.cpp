@@ -27,8 +27,7 @@ addr_pack_t get_addr_from_stack_frame(const std::string& input)
     ///////////////////////////
     for (auto i: input)
     {
-        if (i == '(')
-        {
+        if (i == '(') {
             break;
         }
 
@@ -49,23 +48,17 @@ addr_pack_t get_addr_from_stack_frame(const std::string& input)
 
         if (start)
         {
-            if (i != ']')
-            {
+            if (i != ']') {
                 output_ad += i;
-            }
-            else
-            {
+            } else {
                 break;
             }
         }
     }
 
-    if (!output_ad.empty())
-    {
+    if (!output_ad.empty()) {
         ret.runtime_addr =  strtoll(output_ad.c_str(), nullptr, 16);
-    }
-    else
-    {
+    } else {
         ret.runtime_addr = 0x00;
     }
 
@@ -84,23 +77,17 @@ addr_pack_t get_addr_from_stack_frame(const std::string& input)
 
         if (start)
         {
-            if (i != ')')
-            {
+            if (i != ')') {
                 output_sq += i;
-            }
-            else
-            {
+            } else {
                 break;
             }
         }
     }
 
-    if (!output_sq.empty())
-    {
+    if (!output_sq.empty()) {
         ret.offset =  strtoll(output_sq.c_str(), nullptr, 16);
-    }
-    else
-    {
+    } else {
         ret.offset = 0x00;
     }
 
@@ -117,6 +104,8 @@ std::string ltostr(Type num)
 
 simple_error_t::simple_error_t(uint64_t _error_code, const std::string& extra)
 {
+    int errno_snapshot = errno;
+
     // Automatically obtain stack frame
     void *_array[BACKTRACE_SZ];
     int _size, _i;
@@ -175,12 +164,21 @@ simple_error_t::simple_error_t(uint64_t _error_code, const std::string& extra)
     switch (error_code)
     {
         ERROR_SWITCH_CASE(SUCCESS);
+        ERROR_SWITCH_CASE(SOCKET_CREATION_FAILED);
+        ERROR_SWITCH_CASE(ADDRESS_CONVERT_FAILED);
+        ERROR_SWITCH_CASE(CONNECT_FAILED);
+        ERROR_SWITCH_CASE(ERROR_IN_READ);
+        ERROR_SWITCH_CASE(ERROR_IN_WRITE);
+        ERROR_SWITCH_CASE(BIND_FAILED);
+        ERROR_SWITCH_CASE(ACCEPT_FAILED);
+        ERROR_SWITCH_CASE(LISTEN_FAILED);
+
         default :
             output << "(Unknown error)";
             break;
     }
 
-    output << " (errno=" << strerror(errno) << ")";
+    output << " (errno=" << strerror(errno_snapshot) << ")";
 
     if (!extra.empty())
     {

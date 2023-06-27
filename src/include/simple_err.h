@@ -15,7 +15,15 @@ static const char * code##_ERR_TEXT = info;         \
 const unsigned long int code##_CDX = val;
 
 // add error information
-ADD_ERROR_INFORMATION_(SUCCESS, 0, "Success")
+ADD_ERROR_INFORMATION_(SUCCESS,                 0,  "Success")
+ADD_ERROR_INFORMATION_(SOCKET_CREATION_FAILED,  1,  "Socket creation failed")
+ADD_ERROR_INFORMATION_(ADDRESS_CONVERT_FAILED,  2,  "Convert socket")
+ADD_ERROR_INFORMATION_(CONNECT_FAILED,          3,  "Connection failed")
+ADD_ERROR_INFORMATION_(ERROR_IN_READ,           4,  "Error presented in read")
+ADD_ERROR_INFORMATION_(ERROR_IN_WRITE,          5,  "Error presented in write")
+ADD_ERROR_INFORMATION_(BIND_FAILED,             6,  "Bind failed")
+ADD_ERROR_INFORMATION_(ACCEPT_FAILED,           7,  "Accept failed")
+ADD_ERROR_INFORMATION_(LISTEN_FAILED,           8,  "Listen failed")
 
 #undef ADD_ERROR_INFORMATION_
 

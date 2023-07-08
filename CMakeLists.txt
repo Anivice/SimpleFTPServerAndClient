@@ -36,6 +36,10 @@ add_library(${PROJECT_NAME} STATIC
         src/debug/invoke_addr2line.cpp
         src/debug/simple_err.cpp    src/include/simple_err.h
         src/network/network_session.cpp src/include/network_session.h
+        src/include/ftp.h
+        src/ftp/cmd_parser.cpp
+        src/ftp/ftp_operations.cpp
+        src/ftp/response_layer.cpp  src/include/response_layer.h
         )
 target_include_directories(${PROJECT_NAME} PUBLIC src/include)
 target_link_libraries(${PROJECT_NAME}      PUBLIC ${LIBELF_LIBRARIES})
@@ -52,9 +56,8 @@ target_compile_options(${PROJECT_NAME}     PUBLIC ${LIBELF_CFLAGS_OTHER})
 add_executable(ftp_srv src/exec/ftp_srv.cpp)
 target_link_libraries(ftp_srv PUBLIC ${PROJECT_NAME})
 
-add_executable(ftp_cli src/exec/ftp_cli.cpp)
-target_link_libraries(ftp_cli PUBLIC ${PROJECT_NAME})
-
-_add_test(ftrace    "function trace system")
-_add_test(server    "server pool test")
-_add_test(client    "client test")
+_add_test(ftrace                "function trace system")
+_add_test(server                "server pool test")
+_add_test(client                "client test")
+_add_test(cmd_paraser           "cmd paraser test")
+_add_test(response_layer        "response layer test")
